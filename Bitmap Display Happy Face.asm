@@ -7,7 +7,7 @@
 # Task 2.  Write a function that draws a vertical line
 # Task 3.  Write a function that draws a diagonal line from upper left to lower right
 # Task 4.  Draw a picture.
-# Due Sunday Night.
+
 # Assume Unit Width 8,  Display Width 256.  Base address is static data
 
 .eqv BIT_MAP_ADDR 0x10010000  # Base address for bit display
@@ -23,14 +23,38 @@ main:
   li $s1, GREEN                      # 0x00RRGGBB  1 byte for red, 1 for green 1 for blue
   li $s2, BLUE
   li $s3, RED
-
-  li $a0, 0 			# Set column
-  li $a1, 0 			# Set row
+  
+  li $a0, 8 			# Set row
+  li $a1, 8 			# Set column
   jal LOC_TO_ADDR 	# Find base address
   move $a1, $v0 		# Move base address to $a1
   li $a0, BLUE			# Set color
-  li $a2, 8       	# Set length
+  li $a2, 4       	# Set length
+  jal DRAW_HORIZ_LINE
+  
+  li $a0, 8 			# Set row
+  li $a1, 19 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 4       	# Set length
+  jal DRAW_HORIZ_LINE
+
+  li $a0, 12 			# Set row
+  li $a1, 15 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, GREEN		# Set color
+  li $a2, 2       	# Set length
   jal DRAW_VERTICAL_LINE
+  
+  li $a0, 24 			# Set row
+  li $a1, 8 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 15       	# Set length
+  jal DRAW_HORIZ_LINE
 
   
   # Quit
@@ -111,8 +135,6 @@ DVL_END_FOR_LOOP:
     lw $ra, 0($sp)
     addi $sp, $sp, 16 
     jr $ra
-   
-   # Task 3.  Draw Diagonal line!!! 
    
   # Draw Diagonal Down Line
   # Color - $a0 - Use $s0
