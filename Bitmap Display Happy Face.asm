@@ -1,7 +1,7 @@
 # File: Bitmap Display Happy Face.asm
 # Author: Cameron Baker with init from Professor Meacham
 # Date: Nov. 11, 2021
-# Purpose: Draws a face on the bitmap display.
+# Purpose: Draws a face on the bitmap display. TOTAL ELEMENTS: 12
 
 # Task 1.  Write a function that returns the base address given row,col
 # Task 2.  Write a function that draws a vertical line
@@ -28,7 +28,7 @@ main:
   li $a1, 8 			# Set column
   jal LOC_TO_ADDR 	# Find base address
   move $a1, $v0 		# Move base address to $a1
-  li $a0, BLUE			# Set color
+  li $a0, RED			# Set color
   li $a2, 4       	# Set length
   jal DRAW_HORIZ_LINE
   
@@ -36,7 +36,7 @@ main:
   li $a1, 19 			# Set column
   jal LOC_TO_ADDR 	# Find base address
   move $a1, $v0 		# Move base address to $a1
-  li $a0, BLUE			# Set color
+  li $a0, RED			# Set color
   li $a2, 4       	# Set length
   jal DRAW_HORIZ_LINE
 
@@ -55,6 +55,70 @@ main:
   li $a0, BLUE			# Set color
   li $a2, 15       	# Set length
   jal DRAW_HORIZ_LINE
+  
+  li $a0, 20 			# Set row
+  li $a1, 8 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 15       	# Set length
+  jal DRAW_HORIZ_LINE
+  
+  li $a0, 17 			# Set row
+  li $a1, 5 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_DIAG_DOWN_LINE
+  
+  li $a0, 22 			# Set row
+  li $a1, 6 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 2       	# Set length
+  jal DRAW_DIAG_DOWN_LINE
+  
+  li $a0, 19 			# Set row
+  li $a1, 23 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_DIAG_UP_LINE
+  
+  li $a0, 23 			# Set row
+  li $a1, 23 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 2       	# Set length
+  jal DRAW_DIAG_UP_LINE
+  
+  li $a0, 19 			# Set row
+  li $a1, 6 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_VERTICAL_LINE
+  
+  li $a0, 19 			# Set row
+  li $a1, 24 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_VERTICAL_LINE
+
+  li $a0, 13 			# Set row
+  li $a1, 13 			# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, GREEN		# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_DIAG_UP_LINE
 
   
   # Quit
