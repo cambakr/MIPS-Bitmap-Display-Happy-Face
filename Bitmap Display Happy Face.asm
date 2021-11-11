@@ -24,20 +24,14 @@ main:
   li $s2, BLUE
   li $s3, RED
 
-  li  $a0, BLUE            # Color
-  add $a1, $s0, 808  # Let's see
-  li  $a2, 8        # Length of 7
-  jal DRAW_HORIZ_LINE
-
-  li   $a0,  BLUE
-  addi $a1, $s0, 848
-  li   $a2,   8
-  jal DRAW_HORIZ_LINE
-  
-  li   $a0,  GREEN
-  addi $a1, $s0, 0
-  li   $a2,   14
+  li $a0, 0 			# Set column
+  li $a1, 0 			# Set row
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 8       	# Set length
   jal DRAW_VERTICAL_LINE
+
   
   # Quit
   li $v0, 10
