@@ -42,7 +42,7 @@ main:
   # Color - $a0 - Use $s0
   # Starting Location - Base - $a1 - $s1
   # Length - $a2 - $s2
- .text
+.text
   DRAW_HORIZ_LINE:  
     #Prolog
     sub $sp, $sp, 16        # Need to store four words
@@ -80,7 +80,7 @@ DHL_END_FOR_LOOP:
   # Color - $a0 - Use $s0
   # Starting Location - Base - $a1 - $s1
   # Length - $a2 - $s2
- .text
+.text
   DRAW_VERTICAL_LINE:  
     #Prolog
     sub $sp, $sp, 16        # Need to store four words
@@ -113,12 +113,78 @@ DVL_END_FOR_LOOP:
     jr $ra
    
    # Task 3.  Draw Diagonal line!!! 
+   
+  # Draw Diagonal Down Line
+  # Color - $a0 - Use $s0
+  # Starting Location - Base - $a1 - $s1
+  # Length - $a2 - $s2
+.text
+  DRAW_DIAG_DOWN_LINE:  
+    #Prolog
+    sub $sp, $sp, 16        # Need to store four words
+    sw  $ra, 0($sp)
+    sw  $s0, 4($sp)
+    sw  $s1, 8($sp)
+    sw  $s2, 12($sp)
+    
+    # Logic
+    move $s0, $a0   # Color  
+    move $s1, $a1   # Base
+    move $s2, $a2   # Length
+    
+    li $t0, 0       # i = 0
+DDDL_FOR_LOOP:
+    slt $t1, $t0, $s2  # As long as $t0 is < $s2
+    beq $t1, $zero, DDDL_END_FOR_LOOP 
+      sw $s0, 0($s1)   # Write to the screen
+      addi $t0, $t0, 1    # i++
+      addi $s1, $s1, 132  # Increment our pointer
+      b DDDL_FOR_LOOP
+
+DDDL_END_FOR_LOOP:
+    # Epilog
+    lw $s2, 12($sp)
+    lw $s1, 8($sp)
+    lw $s0, 4($sp)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 16 
+    jr $ra
   
-  # Task 1
-  # Write a subroutine that is given a row $a0, col, $a1.  Assume Unit Width of 8 and Display Width of 256
-  # Returns the Base Address (starting point) of the line...  returns it in $v0
-  
-  # Task 1.  Write a function that returns the base address given row,col
+  # Draw Diagonal Up Line
+  # Color - $a0 - Use $s0
+  # Starting Location - Base - $a1 - $s1
+  # Length - $a2 - $s2
+.text
+  DRAW_DIAG_UP_LINE:  
+    #Prolog
+    sub $sp, $sp, 16        # Need to store four words
+    sw  $ra, 0($sp)
+    sw  $s0, 4($sp)
+    sw  $s1, 8($sp)
+    sw  $s2, 12($sp)
+    
+    # Logic
+    move $s0, $a0   # Color  
+    move $s1, $a1   # Base
+    move $s2, $a2   # Length
+    
+    li $t0, 0       # i = 0
+DDUL_FOR_LOOP:
+    slt $t1, $t0, $s2  # As long as $t0 is < $s2
+    beq $t1, $zero, DDUL_END_FOR_LOOP 
+      sw $s0, 0($s1)   # Write to the screen
+      addi $t0, $t0, 1    # i++
+      subi $s1, $s1, 124  # Increment our pointer
+      b DDUL_FOR_LOOP
+
+DDUL_END_FOR_LOOP:
+    # Epilog
+    lw $s2, 12($sp)
+    lw $s1, 8($sp)
+    lw $s0, 4($sp)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 16 
+    jr $ra
   
   # Given row and column location return base address in $v0
   # Rows and columns are from 0 to 31
@@ -151,5 +217,3 @@ DVL_END_FOR_LOOP:
 		lw $ra, 0($sp)
 		addi $sp, $sp, 12 
 		jr $ra
-		
-		
