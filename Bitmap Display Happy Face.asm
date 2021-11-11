@@ -123,3 +123,39 @@ DVL_END_FOR_LOOP:
   # Task 1
   # Write a subroutine that is given a row $a0, col, $a1.  Assume Unit Width of 8 and Display Width of 256
   # Returns the Base Address (starting point) of the line...  returns it in $v0
+  
+  # Task 1.  Write a function that returns the base address given row,col
+  
+  # Given row and column location return base address in $v0
+  # Rows and columns are from 0 to 31
+  # Row - $a0 - $s0
+  # Column - $a1 - $s1
+.text
+	LOC_TO_ADDR:
+		#Prolog
+		sub $sp, $sp, 12
+		sw  $ra, 0($sp)
+		sw  $s0, 4($sp)
+		sw  $s1, 8($sp)
+		
+		# Logic
+		li $v0, BIT_MAP_ADDR # Load base address
+		li $t0, 4 # Word offset
+		li $t1, 128 # Vertical offset
+		
+		mult $a0, $t1 # Find vertical pos
+		mflo $t2 # Move vertical pos to $t2
+		add $v0, $v0, $t2 # Add vertical position to base address
+		
+		mult $a1, $t0 # Find horizontal pos
+		mflo $t2 # Move horizontal pos to $t2
+		add $v0, $v0, $t2 # Add horizontal position to base address.
+		
+		#Epilog
+		lw $s1, 8($sp)
+		lw $s0, 4($sp)
+		lw $ra, 0($sp)
+		addi $sp, $sp, 12 
+		jr $ra
+		
+		
