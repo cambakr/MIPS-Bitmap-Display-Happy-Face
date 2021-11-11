@@ -119,6 +119,27 @@ main:
   li $a0, GREEN		# Set color
   li $a2, 3       	# Set length
   jal DRAW_DIAG_UP_LINE
+  
+  li $s4, 0
+  li $s6, 10
+  TEETH_LOOP:
+  slti $s5, $s4, 3 # Number of teeth lines
+  beq $s5, $zero, END_TEETH_LOOP
+  
+  li $a0, 21 			# Set row
+  move $a1, $s6 		# Set column
+  jal LOC_TO_ADDR 	# Find base address
+  move $a1, $v0 		# Move base address to $a1
+  li $a0, BLUE			# Set color
+  li $a2, 3       	# Set length
+  jal DRAW_VERTICAL_LINE
+ 
+  addi $s6, $s6, 5 # Teeth offset
+  addi $s4, $s4, 1
+  
+  b TEETH_LOOP
+  
+  END_TEETH_LOOP:
 
   
   # Quit
